@@ -2,20 +2,22 @@ name: Unzip Code for Expo
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 jobs:
   unzip-file:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Unzip Code
+      - name: Unzip Any Zip File
         run: |
-          unzip -o "live-vip-signals (1).zip" -d ./
-          rm "live-vip-signals (1).zip"
+          unzip -o "*.zip" -d ./
+          rm -f *.zip
       - name: Commit Unzipped Files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git commit -m "Unzip code files for Expo" || echo "No changes to commit"
+          git commit -m "Force unzip all code files" || echo "No changes"
           git push origin main
+
